@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+  --color-academic-dark: #03050c;
+  --color-academic-card: #080d1e;
+  --color-academic-border: #1a253e;
+  --color-accent-teal: #06b6d4;
+  --color-accent-violet: #8b5cf6;
+  --color-accent-blue: #3b82f6;
+  --color-accent-cyan: #22d3ee;
+}
+
+/* Sciency Spacetime Coordinate Metric & Curvature Grid */
+.bg-sciency-spacetime {
+  background-color: #03050c;
+  background-image: 
+    /* Cosmic metric grid (major 80px & minor 20px) */
+    linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(to right, rgba(99, 102, 241, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.015) 1px, transparent 1px),
+    /* Deep space astrophysical luminescence */
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.12), transparent 75%),
+    radial-gradient(ellipse 60% 40% at 90% 40%, rgba(14, 165, 233, 0.08), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 10% 80%, rgba(99, 102, 241, 0.09), transparent 70%);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px, 100% 100%, 100% 100%, 100% 100%;
+}
+
+/* Custom mathematical grid & coordinate accents */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(147, 197, 253, 0.12) 1px, transparent 1px);
+}
+
+/* Gravitational wave ripple rings */
+@keyframes gw-ripple {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.animate-gw-ripple {
+  animation: gw-ripple 8s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+
+/* KaTeX typesetting enhancement */
+.katex {
+  font-size: 1.05em;
+  text-rendering: auto;
+}
+
+.katex-display {
+  margin: 0.85em 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35em 0;
+}
+
+/* Custom sleek scientific scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #03050c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}

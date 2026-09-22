@@ -1,0 +1,6 @@
+{
+  "name": "Theoretical Physics Research Platform",
+  "description": "Academic research platform exploring fundamental questions at the intersection of quantum field theory, holography, gravity, and mathematical physics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
