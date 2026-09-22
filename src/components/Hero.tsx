@@ -46,6 +46,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreResearch, onAboutMe }) => {
     let time = 0;
 
     const render = () => {
+      if (width <= 0 || height <= 0) {
+        width = canvas.width = Math.max(100, canvas.offsetWidth);
+        height = canvas.height = Math.max(100, canvas.offsetHeight);
+      }
+
       if (!isAnimationPaused) {
         time += 0.008;
       }
@@ -56,13 +61,16 @@ export const Hero: React.FC<HeroProps> = ({ onExploreResearch, onAboutMe }) => {
       ctx.clearRect(0, 0, width, height);
 
       // Dark subtle vignette background
+      const maxDim = Math.max(width, height);
+      const r0 = Math.min(50, Math.max(1, maxDim * 0.08));
+      const r1 = Math.max(r0 + 20, maxDim * 0.75);
       const gradient = ctx.createRadialGradient(
         width / 2,
         height / 2,
-        50,
+        r0,
         width / 2,
         height / 2,
-        Math.max(width, height) * 0.75
+        r1
       );
       gradient.addColorStop(0, 'rgba(15, 23, 42, 0.4)');
       gradient.addColorStop(1, 'rgba(7, 9, 14, 0.95)');

@@ -36,21 +36,27 @@ export const GravitationalWaveAudio: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animFrameRef = useRef<number | null>(null);
 
-  // Initialize or resume AudioContext
+  // Initialize or resume AudioContext safely
   const getAudioContext = () => {
-    if (!audioCtxRef.current) {
-      const AudioCtxClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const ctx = new AudioCtxClass();
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(volume, ctx.currentTime);
-      masterGain.connect(ctx.destination);
-      audioCtxRef.current = ctx;
-      masterGainRef.current = masterGain;
+    try {
+      if (!audioCtxRef.current) {
+        const AudioCtxClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (!AudioCtxClass) return null;
+        const ctx = new AudioCtxClass();
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(volume, ctx.currentTime);
+        masterGain.connect(ctx.destination);
+        audioCtxRef.current = ctx;
+        masterGainRef.current = masterGain;
+      }
+      if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume();
+      }
+      return { ctx: audioCtxRef.current, masterGain: masterGainRef.current! };
+    } catch (e) {
+      console.warn('AudioContext initialization error:', e);
+      return null;
     }
-    if (audioCtxRef.current.state === 'suspended') {
-      audioCtxRef.current.resume();
-    }
-    return { ctx: audioCtxRef.current, masterGain: masterGainRef.current! };
   };
 
   // Update volume
@@ -89,7 +95,9 @@ export const GravitationalWaveAudio: React.FC = () => {
 
   // Start continuous ambient spacetime background hum (sub-bass quadrupole metric drone)
   const startAmbient = () => {
-    const { ctx, masterGain } = getAudioContext();
+    const audio = getAudioContext();
+    if (!audio) return;
+    const { ctx, masterGain } = audio;
     stopAmbient();
 
     // Create sub-bass drone with slight detuning to produce gravitational wave quadrupole beating
@@ -139,7 +147,9 @@ export const GravitationalWaveAudio: React.FC = () => {
 
   // Play Binary Coalescence Chirp (GW150914 or GW170817)
   const playGravitationalChirp = (eventType: 'gw150914' | 'gw170817' = selectedEvent === 'ambient' ? 'gw150914' : selectedEvent) => {
-    const { ctx, masterGain } = getAudioContext();
+    const audio = getAudioContext();
+    if (!audio) return;
+    const { ctx, masterGain } = audio;
     setIsPlayingChirp(true);
 
     const now = ctx.currentTime + 0.05;
